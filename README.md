@@ -12,3 +12,9 @@ source .venv/bin/activate
 pip install --upgrade pip poetry
 poetry install
 ```
+
+Use `pytest` to check the solutions.
+
+```
+poetry run pytest
+```
