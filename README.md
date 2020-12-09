@@ -1,5 +1,7 @@
 # Advent of Code (2020)
 
+![Python package](https://github.com/rudisimo/advent-of-code-2020/workflows/Python%20package/badge.svg?branch=master)
+
 [Advent of Code](https://adventofcode.com/2020/) is an Advent calendar of small programming puzzles for a variety of skill sets and skill levels that can be solved in any programming language you like.
 
 ## Quickstart
