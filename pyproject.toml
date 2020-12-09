@@ -1,7 +1,7 @@
 [tool.poetry]
 name = "advent-of-code-2020"
 version = "0.1.0"
-description = "Learn to code and lead your intrepid crew on a mission to save The Cloud in TwilioQuest."
+description = "Advent of Code is an Advent calendar of small programming puzzles."
 authors = ["Rodolfo Puig <rodolfo@puig.io>"]
 license = "MIT"
 
