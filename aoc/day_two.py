@@ -1,33 +1,35 @@
 import re
 
+policy_re = re.compile(r"^(\d+)-(\d+)\s+(\w):\s(.*)$", flags=re.IGNORECASE)
 
-def filter_by_frequency(match):
-    min, max, character, password = match.groups()
+
+def filter_by_frequency(low, high, character, password):
     # find all matching characters
-    matches = re.findall(rf"{character}", password, flags=re.IGNORECASE)
+    matches = re.findall(rf"[{character}]", password, flags=re.IGNORECASE)
     # validate range via interval comparison
-    if int(min) <= len(matches) <= int(max):
+    if int(low) <= len(matches) <= int(high):
         return True
     return False
 
 
-def filter_by_position(match):
-    min, max, character, password = match.groups()
-    # match password character at first position
+def filter_by_position(first, second, character, password):
+    # match character at first password position
     try:
-        first = password[int(min) - 1] == character
+        first_match = password[int(first) - 1] == character
     except IndexError:
-        first = False
-    # match password character at last position
+        first_match = False
+    # match character at second password position
     try:
-        last = password[int(max) - 1] == character
+        second_match = password[int(second) - 1] == character
     except IndexError:
-        last = False
-    # XOR first and last password character matches
-    return first ^ last
+        second_match = False
+    # XOR first and second password character matches due to constraints
+    return first_match ^ second_match
 
 
 def answer(policies, filter):
-    policy_re = re.compile(r"(?P<min>\d+)-(?P<max>\d+)\s+(?P<character>\w):\s(?P<password>.*)", flags=re.IGNORECASE)
-    matched_policies = [p for p in policies if filter(policy_re.match(p))]
+    # parse each password policy into its separate components
+    parsed_policies = (policy_re.match(p).groups() for p in policies if policy_re.match(p))
+    # return the password policies that match the filter
+    matched_policies = [p for p in parsed_policies if filter(*p) == True]
     return len(matched_policies)
