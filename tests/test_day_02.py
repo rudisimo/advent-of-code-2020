@@ -1,6 +1,6 @@
 import pytest
 
-from aoc.day_two import answer, filter_by_frequency, filter_by_position
+from aoc.day_02 import answer, filter_by_frequency, filter_by_position
 
 
 @pytest.mark.parametrize(

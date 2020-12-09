@@ -1,6 +1,6 @@
 import pytest
 
-from aoc.day_one import answer
+from aoc.day_01 import answer
 
 
 @pytest.mark.parametrize(
