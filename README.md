@@ -1,6 +1,6 @@
 # Advent of Code (2020)
 
-[TwilioQuest](https://www.twilio.com/quest) - Learn to code and lead your intrepid crew on a mission to save The Cloud in TwilioQuest, a PC role-playing game inspired by classics of the 16-bit era. Free forever, and available now for Windows, Mac, and Linux.
+[Advent of Code](https://adventofcode.com/2020/) is an Advent calendar of small programming puzzles for a variety of skill sets and skill levels that can be solved in any programming language you like.
 
 ## Quickstart
 
