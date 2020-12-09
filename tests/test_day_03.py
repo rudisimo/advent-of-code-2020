@@ -3,22 +3,28 @@ import pytest
 from aoc.day_03 import Node, answer
 
 
+def identify(val):
+    if isinstance(val, (Node,)):
+        return str(val)
+
+
 @pytest.mark.parametrize(
-    "offset,expected,input",
+    "inputs,offset,expected",
     [
-        pytest.param(Node(3, 1), 0, ["....", "....", "....", "...."], id="grid_without_any_trees"),
-        pytest.param(Node(3, 1), 7, "example"),
-        pytest.param(Node(1, 1), 2, "example"),
-        pytest.param(Node(5, 1), 3, "example"),
-        pytest.param(Node(7, 1), 4, "example"),
-        pytest.param(Node(1, 2), 2, "example"),
-        pytest.param(Node(3, 1), 250, "puzzle"),
-        pytest.param(Node(1, 1), 55, "puzzle"),
-        pytest.param(Node(5, 1), 54, "puzzle"),
-        pytest.param(Node(7, 1), 55, "puzzle"),
-        pytest.param(Node(1, 2), 39, "puzzle"),
+        pytest.param("without_trees", Node(3, 1), 0),
+        pytest.param("example_input", Node(3, 1), 7),
+        pytest.param("example_input", Node(1, 1), 2),
+        pytest.param("example_input", Node(5, 1), 3),
+        pytest.param("example_input", Node(7, 1), 4),
+        pytest.param("example_input", Node(1, 2), 2),
+        pytest.param("puzzle_input", Node(3, 1), 250),
+        pytest.param("puzzle_input", Node(1, 1), 55),
+        pytest.param("puzzle_input", Node(5, 1), 54),
+        pytest.param("puzzle_input", Node(7, 1), 55),
+        pytest.param("puzzle_input", Node(1, 2), 39),
     ],
+    ids=identify,
 )
-def test_answers(resources, offset, expected, input):
-    grid = input if isinstance(input, list) else resources.get(input)
+def test_answers(fixtures, inputs, offset, expected):
+    grid = fixtures.get(inputs, [])
     assert answer(grid, offset) == expected

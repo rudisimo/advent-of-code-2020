@@ -4,17 +4,17 @@ from aoc.day_01 import answer
 
 
 @pytest.mark.parametrize(
-    "value,size,expected,input",
+    "inputs,value,size,expected",
     [
-        pytest.param(2020, 2, 0, [], id="empty_expense_list_is_zero"),
-        pytest.param(2020, 2, 0, [2020, 0], id="product_of_zero_is_zero"),
-        pytest.param(2020, 3, 2018, [2018, 1, 1], id="product_of_one_is_value"),
-        pytest.param(2020, 2, 514579, "example", id="part_1_example"),
-        pytest.param(2020, 2, 996996, "puzzle", id="part_1_puzzle"),
-        pytest.param(2020, 3, 241861950, "example", id="part_2_example"),
-        pytest.param(2020, 3, 9210402, "puzzle", id="part_2_puzzle"),
+        pytest.param("empty_list", 2020, 2, 0),
+        pytest.param("product_of_zero", 2020, 2, 0),
+        pytest.param("product_of_self", 2020, 3, 2018),
+        pytest.param("example_input", 2020, 2, 514579),
+        pytest.param("puzzle_input", 2020, 2, 996996),
+        pytest.param("example_input", 2020, 3, 241861950),
+        pytest.param("puzzle_input", 2020, 3, 9210402),
     ],
 )
-def test_answers(resources, value, size, expected, input):
-    expenses = input if isinstance(input, list) else resources.get(input)
+def test_answers(fixtures, inputs, value, size, expected):
+    expenses = fixtures.get(inputs, [])
     assert answer(expenses, size, value) == expected
