@@ -1,27 +1,27 @@
 from __future__ import annotations
-from typing import FrozenSet
+
 import re
 
-
 VALIDATE_BY_PRESENCE = {
-    ('byr', lambda x: True),
-    ('ecl', lambda x: True),
-    ('eyr', lambda x: True),
-    ('hcl', lambda x: True),
-    ('hgt', lambda x: True),
-    ('iyr', lambda x: True),
-    ('pid', lambda x: True),
+    ("byr", lambda x: True),
+    ("ecl", lambda x: True),
+    ("eyr", lambda x: True),
+    ("hcl", lambda x: True),
+    ("hgt", lambda x: True),
+    ("iyr", lambda x: True),
+    ("pid", lambda x: True),
 }
 
 VALIDATE_BY_REGEX_VALUE = {
-    ('byr', re.compile(r'^([1][9][2-9][0-9]|[2][0][0][0-2])$', re.I).match),
-    ('ecl', re.compile(r'^(amb|blu|brn|gry|grn|hzl|oth)$', re.I).match),
-    ('eyr', re.compile(r'^([2][0][2][0-9]|[2][0][3][0])$', re.I).match),
-    ('hcl', re.compile(r'^(#[\da-f]{6})$', re.I).match),
-    ('hgt', re.compile(r'^([1][5-8][0-9]cm|[1][9][0-3]cm|[5][9]in|[6][0-9]in|[7][0-6]in)$', re.I).match),
-    ('iyr', re.compile(r'^([2][0][1][0-9]|[2][0][2][0])$', re.I).match),
-    ('pid', re.compile(r'^([\d]{9})$', re.I).match),
+    ("byr", re.compile(r"^([1][9][2-9][0-9]|[2][0][0][0-2])$", re.I).match),
+    ("ecl", re.compile(r"^(amb|blu|brn|gry|grn|hzl|oth)$", re.I).match),
+    ("eyr", re.compile(r"^([2][0][2][0-9]|[2][0][3][0])$", re.I).match),
+    ("hcl", re.compile(r"^(#[\da-f]{6})$", re.I).match),
+    ("hgt", re.compile(r"^([1][5-8][0-9]cm|[1][9][0-3]cm|[5][9]in|[6][0-9]in|[7][0-6]in)$", re.I).match),
+    ("iyr", re.compile(r"^([2][0][1][0-9]|[2][0][2][0])$", re.I).match),
+    ("pid", re.compile(r"^([\d]{9})$", re.I).match),
 }
+
 
 def split_batch(iterable, separators):
     """ Split a list each time we encounter an element matching any of the separator values provided. """
@@ -34,11 +34,12 @@ def split_batch(iterable, separators):
             group = []
     yield group
 
-class Passport():
+
+class Passport:
     def __init__(self, fields: dict):
         self.fields = fields
 
-    def validate(self, validator: FrozenSet):
+    def validate(self, validator):
         try:
             # validate fields using validator function
             return not [k for k, f in validator if not f(self.fields[k])]
@@ -48,9 +49,9 @@ class Passport():
 
     @staticmethod
     def from_batch(iterable) -> Passport:
-        # convert
-        field_list = list(' '.join(iterable).split(' '))
-        field_dict = {name.lower(): value for name, value in [field.split(':', 1) for field in field_list]}
+        # convert batch data to Passport object
+        field_list = list(" ".join(iterable).split(" "))
+        field_dict = {name.lower(): value for name, value in [field.split(":", 1) for field in field_list]}
         return Passport(field_dict)
 
 

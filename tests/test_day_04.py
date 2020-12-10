@@ -1,6 +1,6 @@
 import pytest
 
-from aoc.day_04 import answer, VALIDATE_BY_PRESENCE, VALIDATE_BY_REGEX_VALUE
+from aoc.day_04 import VALIDATE_BY_PRESENCE, VALIDATE_BY_REGEX_VALUE, answer
 
 
 @pytest.mark.parametrize(
