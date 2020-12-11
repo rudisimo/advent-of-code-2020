@@ -1,29 +1,24 @@
 import re
+from typing import List
 
-policy_re = re.compile(r"^(\d+)-(\d+)\s+(\w):\s(.*)$", flags=re.IGNORECASE)
-
-
-def filter_by_frequency(low, high, character, password):
-    # find all matching characters
-    matches = re.findall(rf"[{character}]", password, flags=re.IGNORECASE)
-    # validate range via interval comparison
-    if int(low) <= len(matches) <= int(high):
-        return True
-    return False
+POLICY_RE = re.compile(r"^(?P<lower>\d+)-(?P<upper>\d+)\s+(?P<character>\w):\s(?P<password>.*)$", flags=re.I)
 
 
-def filter_by_position(first, second, character, password):
-    # match character at first password position
-    first_match = password[int(first) - 1] == character
-    # match character at second password position
-    second_match = password[int(second) - 1] == character
-    # XOR first and second password character matches due to constraints
-    return first_match ^ second_match
+def answer1(input: List[str]) -> int:
+    count = 0
+    for policy in input:
+        (minimum, maximum, character, password) = POLICY_RE.findall(policy)[0]
+        if int(minimum) <= password.count(character) <= int(maximum):
+            count += 1
+    return count
 
 
-def answer(policies, filter):
-    # parse each password policy into its separate components
-    parsed_policies = (policy_re.match(p).groups() for p in policies if policy_re.match(p))
-    # return the password policies that match the filter
-    matched_policies = [p for p in parsed_policies if filter(*p)]
-    return len(matched_policies)
+def answer2(input: List[str]) -> int:
+    count = 0
+    for policy in input:
+        (first_pos, second_pos, character, password) = POLICY_RE.findall(policy)[0]
+        first_match = password[int(first_pos) - 1] == character
+        last_match = password[int(second_pos) - 1] == character
+        if first_match ^ last_match:
+            count += 1
+    return count
